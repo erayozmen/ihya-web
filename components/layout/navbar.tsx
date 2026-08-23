@@ -37,10 +37,14 @@ export function Navbar() {
           <Image
             src="/brand/ihya-logo.png"
             alt="Tekirdağ İhya Derneği"
-            width={182}
-            height={64}
+            width={76}
+            height={76}
             className="navbar__logo"
           />
+          <span className="navbar__brand-copy">
+            <strong>Tekirdağ İhya Derneği</strong>
+            <small>İlim - Hizmet - Yardımlaşma</small>
+          </span>
         </Link>
 
         <nav id="mobile-menu" className={`navbar__nav ${open ? "is-open" : ""}`} aria-label="Ana menü">
