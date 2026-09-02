@@ -9,7 +9,7 @@ export function Footer() {
   const socialHandles = socialLinks.filter((social) => social.handle);
 
   return (
-    <footer className="footer">
+    <footer className="footer section--textured-dark">
       <Container>
         <div className="footer__main">
           <div className="footer__brand">

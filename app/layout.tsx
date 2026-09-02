@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Amiri, Aref_Ruqaa, Berkshire_Swash, Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
 
 const description =
@@ -17,6 +17,27 @@ const manrope = Manrope({
   variable: "--font-body",
   subsets: ["latin", "latin-ext"],
   display: "swap",
+});
+
+const amiri = Amiri({
+  variable: "--font-arabic",
+  subsets: ["arabic"],
+  display: "swap",
+  weight: ["400", "700"],
+});
+
+const arefRuqaa = Aref_Ruqaa({
+  variable: "--font-arabic-display",
+  subsets: ["arabic", "latin"],
+  display: "swap",
+  weight: ["700"],
+});
+
+const berkshireSwash = Berkshire_Swash({
+  variable: "--font-calligraphy",
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -40,7 +61,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="tr">
-      <body className={`${cormorant.variable} ${manrope.variable}`}>{children}</body>
+      <body className={`${cormorant.variable} ${manrope.variable} ${amiri.variable} ${arefRuqaa.variable} ${berkshireSwash.variable}`}>{children}</body>
     </html>
   );
 }

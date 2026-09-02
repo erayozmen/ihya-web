@@ -1,4 +1,4 @@
-import { Clock3, MapPin } from "lucide-react";
+import { Clock3, MapPin, Sparkles } from "lucide-react";
 import Image from "next/image";
 import type { WebsiteEvent } from "@/lib/data/events";
 
@@ -17,7 +17,13 @@ export function EventCard({ event, index }: EventCardProps) {
   return (
     <article className="event-card">
       <div className={`event-card__visual event-card__visual--${tone}`}>
-        {event.image ? <Image src={event.image} alt={event.imageAlt ?? ""} fill sizes="(max-width: 767px) 82vw, (max-width: 1100px) 45vw, 22vw" /> : <div aria-hidden="true"><span className="event-card__arch" /><span className="event-card__line" /></div>}
+        {event.image ? (
+          <Image src={event.image} alt={event.imageAlt ?? ""} fill sizes="(max-width: 767px) 82vw, (max-width: 1100px) 45vw, 22vw" />
+        ) : (
+          <div className="manuscript-motif" aria-hidden="true">
+            <span className="manuscript-motif__icon"><Sparkles size={22} strokeWidth={1.4} /></span>
+          </div>
+        )}
       </div>
 
       <div className="event-card__body">

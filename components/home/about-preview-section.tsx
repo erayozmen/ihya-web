@@ -7,7 +7,8 @@ export function AboutPreviewSection() {
   const institutionalImage = corporateMedia.find((item) => item.purpose === "institutional");
 
   return (
-    <section className="about-preview" id="hakkimizda">
+    <section className="about-preview section--textured" id="hakkimizda">
+      <span className="section-divider" aria-hidden="true" />
       <Container>
         <SectionLabel>İhya’yı Tanıyın</SectionLabel>
         <div className="about-preview__layout">

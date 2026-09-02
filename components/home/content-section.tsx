@@ -1,4 +1,4 @@
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, Play, Quote } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/layout/container";
@@ -20,7 +20,13 @@ export function ContentSection() {
           {verifiedContent.map((item) => (
             <Link href="#icerikler" className={`content-item content-item--${item.variant}`} key={item.id}>
               <div className={`content-item__visual content-item__visual--${item.tone}`}>
-                {item.image ? <Image src={item.image} alt={item.imageAlt} fill sizes="(max-width: 767px) 100vw, 60vw" style={{ objectPosition: item.imageObjectPosition ?? "center" }} /> : <span className="content-item__pattern" aria-hidden="true" />}
+                {item.image ? (
+                  <Image src={item.image} alt={item.imageAlt} fill sizes="(max-width: 767px) 100vw, 60vw" style={{ objectPosition: item.imageObjectPosition ?? "center" }} />
+                ) : (
+                  <div className="manuscript-motif" aria-hidden="true">
+                    <span className="manuscript-motif__icon"><Quote size={20} strokeWidth={1.4} /></span>
+                  </div>
+                )}
                 <span className="content-item__play" aria-hidden="true"><Play size={18} fill="currentColor" /></span>
               </div>
               <div className="content-item__copy"><span>{item.type}</span><h3>{item.title}</h3></div>

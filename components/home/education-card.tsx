@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, BookOpen, Languages, ScrollText, Volume2, type LucideIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { EducationCategory } from "@/lib/home-data";
@@ -8,7 +8,16 @@ type EducationCardProps = {
   index: number;
 };
 
+const categoryIcons: Record<string, LucideIcon> = {
+  "kuran-yolculugu": BookOpen,
+  "guzel-okuyus": Volume2,
+  "ilmihal-siyer": ScrollText,
+  "arapca-egitimleri": Languages,
+};
+
 export function EducationCard({ category, index }: EducationCardProps) {
+  const Icon = categoryIcons[category.id] ?? BookOpen;
+
   return (
     <article className={`education-card education-card--${category.variant}`}>
       <div className={`education-card__visual education-card__visual--${category.tone}`}>
@@ -21,8 +30,8 @@ export function EducationCard({ category, index }: EducationCardProps) {
             style={{ objectPosition: category.imageObjectPosition ?? "center" }}
           />
         ) : (
-          <div className="education-card__pattern" aria-hidden="true">
-            <span />
+          <div className="manuscript-motif" aria-hidden="true">
+            <span className="manuscript-motif__icon"><Icon size={22} strokeWidth={1.4} /></span>
           </div>
         )}
         <span className="education-card__index" aria-hidden="true">

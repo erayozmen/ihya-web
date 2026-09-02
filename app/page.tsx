@@ -11,20 +11,19 @@ import { ParticipationSection } from "@/components/home/participation-section";
 import { UpcomingEvents } from "@/components/home/upcoming-events";
 import { Footer } from "@/components/layout/footer";
 import { FloatingWhatsApp } from "@/components/layout/floating-whatsapp";
-import { Navbar } from "@/components/layout/navbar";
+import { InquiryModalProvider } from "@/components/ui/inquiry-modal";
 
 export default function Home() {
   return (
-    <>
-      <Navbar />
+    <InquiryModalProvider>
       <main>
         <Hero />
         <ImpactStats />
-        <UpcomingEvents />
-        <MedresesSection />
         <AboutPreviewSection />
-        <EducationSection />
         <FieldActivitiesSection />
+        <EducationSection />
+        <MedresesSection />
+        <UpcomingEvents />
         <MobileAppSection />
         <ContentSection />
         <ParticipationSection />
@@ -32,6 +31,6 @@ export default function Home() {
       </main>
       <Footer />
       <FloatingWhatsApp />
-    </>
+    </InquiryModalProvider>
   );
 }

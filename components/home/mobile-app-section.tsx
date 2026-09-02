@@ -14,7 +14,8 @@ const featureIcons: Record<MobileFeature["icon"], typeof Clock3> = {
 export function MobileAppSection() {
   const [backScreenshot, frontScreenshot] = mobileAppConfig.screenshots;
   return (
-    <section className="mobile-app" id="ihya-mobil">
+    <section className="mobile-app section--textured-dark" id="ihya-mobil">
+      <span className="section-divider" aria-hidden="true" />
       <Container className="mobile-app__layout">
         <div className="mobile-app__devices" role="img" aria-label="İhya Mobil uygulama önizlemesi için iki telefon maketi">
           <span className="mobile-app__halo" aria-hidden="true" />

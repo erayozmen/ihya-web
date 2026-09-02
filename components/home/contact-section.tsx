@@ -10,6 +10,7 @@ export function ContactSection() {
 
   return (
     <section className="contact" id="iletisim">
+      <span className="section-divider" aria-hidden="true" />
       <Container className="contact__layout">
         <div className="contact__intro">
           <SectionLabel>Bize Ulaşın</SectionLabel>

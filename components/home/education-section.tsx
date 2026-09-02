@@ -7,7 +7,8 @@ import { EducationCard } from "./education-card";
 
 export function EducationSection() {
   return (
-    <section className="education" id="egitimler">
+    <section className="education section--textured" id="egitimler">
+      <span className="section-divider" aria-hidden="true" />
       <Container>
         <div className="education__intro">
           <div>

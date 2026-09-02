@@ -1,18 +1,21 @@
-"use client";
-
-import Image from "next/image";
-import { useState } from "react";
+import { BookOpen, Coffee, Heart, Home, Leaf, Store, type LucideIcon } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { SectionLabel } from "@/components/ui/section-label";
 import { fieldActivities } from "@/lib/home-data";
-import { FieldActivitySelector } from "./field-activity-selector";
+
+const activityIcons: Record<string, LucideIcon> = {
+  "aksam-dersleri": BookOpen,
+  "esnaf-ziyaretleri": Store,
+  "ev-ziyaretleri": Home,
+  "hasta-ziyaretleri": Heart,
+  "taziye-ziyaretleri": Leaf,
+  "kahvehane-sohbetleri": Coffee,
+};
 
 export function FieldActivitiesSection() {
-  const [selectedId, setSelectedId] = useState(fieldActivities[0].id);
-  const selected = fieldActivities.find((item) => item.id === selectedId) ?? fieldActivities[0];
-
   return (
-    <section className="field-activities" id="faaliyetler">
+    <section className="field-activities section--textured" id="faaliyetler">
+      <span className="section-divider" aria-hidden="true" />
       <Container>
         <div className="field-activities__heading">
           <div>
@@ -25,36 +28,19 @@ export function FieldActivitiesSection() {
           </p>
         </div>
 
-        <div className="field-activities__layout">
-          <div className="field-activities__stage" aria-live="polite">
-            <div className={`field-activities__visual field-activities__visual--${selected.tone}`} key={selected.id}>
-              {selected.image ? (
-                <Image
-                  src={selected.image}
-                  alt={selected.imageAlt}
-                  fill
-                  sizes="(max-width: 767px) 100vw, 58vw"
-                  style={{ objectPosition: selected.imageObjectPosition ?? "center" }}
-                />
-              ) : (
-                <div className="field-activities__pattern" aria-hidden="true">
-                  <span />
-                  <span />
-                </div>
-              )}
-              <div className="field-activities__caption">
-                <span>Seçili Faaliyet</span>
-                <h3>{selected.title}</h3>
-                <p>{selected.description}</p>
-              </div>
-            </div>
-          </div>
-
-          <FieldActivitySelector
-            items={fieldActivities}
-            selectedId={selected.id}
-            onSelect={setSelectedId}
-          />
+        <div className="field-activities__grid">
+          {fieldActivities.map((activity) => {
+            const Icon = activityIcons[activity.id];
+            return (
+              <article className="field-activity-card" key={activity.id}>
+                <span className="field-activity-card__icon" aria-hidden="true">
+                  <Icon size={22} strokeWidth={1.5} />
+                </span>
+                <h3>{activity.title}</h3>
+                <p>{activity.description}</p>
+              </article>
+            );
+          })}
         </div>
       </Container>
     </section>
