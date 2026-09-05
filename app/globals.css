@@ -286,6 +286,158 @@ a {
 .hero__cta:hover,
 .hero__cta:focus-visible { filter: brightness(1.2); }
 
+.hero__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Instagram / Facebook / Google Play, sized to sit quietly next to the nav
+   links and Bağış Yap button without competing with them — smaller and
+   lower-contrast than .hero__cta, only asserting themselves on hover. */
+.hero__nav-socials {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero__nav-socials a,
+.hero__nav-socials span {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #123d2f;
+  transition: background-color 160ms ease, opacity 160ms ease;
+}
+
+.hero__nav-socials svg { width: 16px; height: 16px; }
+
+.hero__nav-socials a:hover,
+.hero__nav-socials a:focus-visible { background: rgba(18, 61, 47, 0.12); }
+
+.hero__nav-socials .is-soon { cursor: not-allowed; opacity: 0.45; }
+
+.hero__mobile-socials {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+.hero__mobile-socials a,
+.hero__mobile-socials span {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(18, 61, 47, 0.25);
+  border-radius: 50%;
+  color: #123d2f;
+  transition: background-color 160ms ease, opacity 160ms ease;
+}
+
+.hero__mobile-socials svg { width: 19px; height: 19px; }
+
+.hero__mobile-socials a:hover,
+.hero__mobile-socials a:focus-visible { background: rgba(18, 61, 47, 0.12); }
+
+.hero__mobile-socials .is-soon { cursor: not-allowed; opacity: 0.45; }
+
+@media (min-width: 900px) {
+  .hero__nav-socials { display: flex; }
+}
+
+/* Hamburger toggle — hidden on desktop (.hero__nav takes over at 900px),
+   only ever visible below that breakpoint. This is the control that was
+   entirely missing before: on narrow screens .hero__nav (display:none by
+   default) never gets its display:flex, and nothing replaced it, so the
+   whole navigation disappeared with no way to open it. */
+.hero__menu-toggle {
+  display: flex;
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.hero__menu-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 1px;
+  background: #123d2f;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.hero__menu-toggle.is-open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.hero__menu-toggle.is-open span:nth-child(2) { opacity: 0; }
+.hero__menu-toggle.is-open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* Full-screen mobile nav panel, same gold/bronze family as the header so it
+   reads as part of the same surface rather than a generic overlay. Always
+   present in the DOM (for the open/close transition) but visually and
+   interactively inert until .is-open, and force-hidden at desktop widths
+   below regardless of state so a stale menuOpen can't leak into desktop. */
+.hero__mobile-nav {
+  position: fixed;
+  z-index: 30;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.75rem;
+  padding: 6rem 1.5rem 3rem;
+  background: linear-gradient(160deg, #f6e7bb 0%, #e6ca65 45%, #c9a24a 100%);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-16px);
+  transition: opacity 220ms ease, transform 220ms ease, visibility 220ms;
+}
+
+.hero__mobile-nav.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.hero__mobile-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.hero__mobile-links a,
+.hero__mobile-links button {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: #123d2f;
+  font-family: var(--font-calligraphy), serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  text-align: center;
+}
+
+.hero__mobile-links a:hover,
+.hero__mobile-links button:hover { color: #1b4d3e; text-decoration: underline; }
+
+.hero__mobile-cta { align-self: center; }
+
 /* The tezhip artwork itself, tiled at full richness across the section,
    with a soft dark-green wash layered over it for depth and to keep the
    headline readable without hiding the pattern underneath. */
@@ -451,15 +603,36 @@ a {
 
 @media (min-width: 900px) {
   .hero__nav { display: flex; }
+  .hero__menu-toggle,
+  .hero__mobile-nav { display: none; }
+}
+
+@media (max-width: 640px) {
+  .hero__mobile-nav { padding: 5rem 1.25rem 2.5rem; gap: 2.25rem; }
+  .hero__mobile-links { gap: 1.25rem; }
+  .hero__mobile-links a,
+  .hero__mobile-links button { font-size: 1.4rem; }
 }
 
 @media (max-width: 1099px) {
-  .hero__main { grid-template-columns: 1fr; min-height: auto; padding-block: 3rem 3.5rem; text-align: center; }
-  .hero__content { max-width: 640px; margin-inline: auto; }
-  .hero__seals { justify-content: center; }
+  .hero__main { grid-template-columns: 1fr; min-height: auto; padding-block: 3rem 3.5rem; text-align: center; gap: 0; }
+  /* display:contents unwraps .hero__content so its children (seals, heading,
+     description, actions) become direct grid items of .hero__main and can
+     each get their own `order` — required so the seals (Allah/Muhammed
+     mühürleri) can be placed above the portrait, which they must always
+     precede. Every child already centers itself independently (seals/
+     actions via their own justify-content:center, description via its own
+     margin-inline:auto, heading via text-align:center + a forced <br/>), so
+     dropping this wrapper's own max-width/centering has no visible effect. */
+  .hero__content { display: contents; }
+  .hero__seals { justify-content: center; order: -2; }
   .hero__description { margin-inline: auto; }
   .hero__actions { justify-content: center; }
-  .hero__portrait { order: -1; width: clamp(240px, 52vw, 340px); }
+  .hero__portrait {
+    order: -1;
+    width: clamp(240px, 52vw, 340px);
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+  }
 }
 
 @media (max-width: 640px) {
@@ -1280,6 +1453,40 @@ h2 em { font-weight: 500; font-style: italic; }
 .store-button:hover,
 .store-button:focus-visible { border-color: var(--gold-bright); }
 
+.store-button--play {
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.store-button--play svg { flex: 0 0 auto; width: 22px; height: 22px; }
+.store-button--play > span { display: flex; flex-direction: column; }
+
+.store-button--soon {
+  cursor: not-allowed;
+  opacity: 0.55;
+  filter: grayscale(0.4);
+}
+
+.store-button--soon:hover,
+.store-button--soon:focus-visible { border-color: rgba(247, 242, 232, 0.32); }
+
+.store-button__badge {
+  position: absolute;
+  top: -0.55rem;
+  right: -0.4rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: var(--gold-bright);
+  color: var(--ink-deep);
+  font-size: 0.52rem;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 /* ---------------------------------------------------------------------- */
 /* Contents — editorial rows, mirrors the education/events treatment.      */
 /* ---------------------------------------------------------------------- */
@@ -1409,6 +1616,50 @@ button.participation__option {
 .contact__social-handles small { color: var(--gold); font-size: 0.54rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
 .contact__social-handles a:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
 
+/* Shared circular icon-button treatment for real platform logos, used on
+   both the light contact section and the dark footer — each context sets
+   its own colors below since the two backgrounds need different contrast. */
+.social-icon-link {
+  display: flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: transform 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+
+.social-icon-link svg { width: 20px; height: 20px; }
+
+.social-icon-link:hover,
+.social-icon-link:focus-visible { transform: translateY(-2px); }
+
+.contact__social-handles .social-icon-link {
+  border: 1px solid rgba(18, 61, 47, 0.25);
+  color: var(--ink);
+  background: rgba(212, 175, 90, 0.12);
+}
+
+.contact__social-handles .social-icon-link:hover,
+.contact__social-handles .social-icon-link:focus-visible {
+  border-color: var(--gold);
+  color: #123d2f;
+  background: rgba(212, 175, 90, 0.28);
+}
+
+.footer__socials .social-icon-link {
+  border: 1px solid rgba(247, 242, 232, 0.2);
+  color: var(--parchment);
+  background: rgba(247, 242, 232, 0.06);
+}
+
+.footer__socials .social-icon-link:hover,
+.footer__socials .social-icon-link:focus-visible {
+  border-color: var(--gold-bright);
+  color: var(--gold-bright);
+  background: rgba(247, 242, 232, 0.12);
+}
+
 .footer { position: relative; padding-top: 5rem; background: var(--ink-deep); color: var(--parchment); }
 .footer__main { display: grid; padding-bottom: 3.5rem; grid-template-columns: 0.9fr 0.85fr 1fr; gap: clamp(2.5rem, 5vw, 5rem); }
 .footer__brand img { width: 64px; height: 64px; border-radius: 12px; object-fit: contain; }
@@ -1436,8 +1687,8 @@ button.participation__option {
   right: max(28px, env(safe-area-inset-right));
   bottom: max(28px, env(safe-area-inset-bottom));
   display: grid;
-  width: 54px;
-  height: 54px;
+  width: 66px;
+  height: 66px;
   place-items: center;
   border: 1px solid rgba(247, 242, 232, 0.4);
   border-radius: 50%;
@@ -1541,7 +1792,7 @@ button.participation__option {
   .footer__main { grid-template-columns: 1fr; gap: 2.5rem; }
   .footer__brand { grid-column: auto; }
   .footer__bottom { align-items: flex-start; flex-direction: column; gap: 0.75rem; padding-block: 1.4rem; }
-  .floating-whatsapp { right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); width: 50px; height: 50px; }
+  .floating-whatsapp { right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); width: 62px; height: 62px; }
 }
 
 @media (max-width: 380px) {
@@ -1703,3 +1954,144 @@ button.participation__option {
 
 .inquiry-modal__success h2 { padding-right: 0; }
 .inquiry-modal__success p { margin: 0; color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+
+/* ---------------------------------------------------------------------- */
+/* Bağış Yap — /bagis-yap                                                  */
+/* ---------------------------------------------------------------------- */
+
+.donate-page { padding-block: clamp(3rem, 6vw, 5rem) clamp(4rem, 8vw, 7rem); }
+
+.donate-page__intro { max-width: 760px; }
+
+.donate-page__intro h1 {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-calligraphy), serif;
+  font-size: clamp(2.4rem, 4.4vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.donate-page__intro p {
+  margin: 1.4rem 0 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+.donate-page__layout {
+  display: grid;
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  align-items: start;
+  grid-template-columns: 1.7fr 1fr;
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+.donate-categories {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.4rem;
+}
+
+.donate-category {
+  padding: 1.9rem 1.7rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--parchment-dim);
+}
+
+.donate-category__icon {
+  display: flex;
+  width: 50px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.1rem;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  color: #123d2f;
+  background: rgba(212, 175, 90, 0.14);
+}
+
+.donate-category h2 {
+  margin: 0 0 0.6rem;
+  color: var(--ink);
+  font-family: var(--font-heading), serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.donate-category p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.donate-bank {
+  position: sticky;
+  top: 6.5rem;
+  padding: 1.9rem 1.7rem;
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  background: var(--parchment-dim);
+}
+
+.donate-bank h2 {
+  margin: 0 0 1.3rem;
+  color: var(--ink);
+  font-family: var(--font-heading), serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.donate-bank dl { display: flex; flex-direction: column; gap: 1.1rem; margin: 0; }
+.donate-bank dt { margin: 0 0 0.25rem; color: var(--gold); font-size: 0.62rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+.donate-bank dd { margin: 0; color: var(--ink); font-size: 0.92rem; font-weight: 600; }
+
+.donate-bank__iban {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.donate-bank__iban span { font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+
+.donate-bank__copy {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--gold);
+  border-radius: 3px;
+  background: transparent;
+  color: #123d2f;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+
+.donate-bank__copy:hover,
+.donate-bank__copy:focus-visible { background: rgba(212, 175, 90, 0.18); }
+
+.donate-bank__note {
+  margin: 1.4rem 0 0;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .donate-page__layout { grid-template-columns: 1fr; }
+  .donate-bank { position: static; }
+}
+
+@media (max-width: 640px) {
+  .donate-categories { grid-template-columns: 1fr; }
+}

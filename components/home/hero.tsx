@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useInquiryModal } from "@/components/ui/inquiry-modal";
 
 export function Hero() {
@@ -9,33 +8,6 @@ export function Hero() {
 
   return (
     <>
-      {/* EN ÜSTE YAPIŞIK HEADER — hero'nun overflow:hidden kutusunun DIŞINDA,
-          aksi halde position:sticky ata elemanın overflow'u yüzünden çalışmaz. */}
-      <header className="hero__header">
-        <Link href="#anasayfa" className="hero__brand">
-          <Image src="/brand/ihya-logo.png" alt="Tekirdağ İhya Derneği" width={40} height={40} className="hero__brand-logo" />
-          <span>
-            <strong>Tekirdağ İhya Derneği</strong>
-            <small>İlim • Hizmet • Yardımlaşma</small>
-          </span>
-        </Link>
-
-        <nav className="hero__nav">
-          <a href="#anasayfa">Ana Sayfa</a>
-          <a href="#hakkimizda">Hakkımızda</a>
-          <a href="#faaliyetler">Faaliyetler</a>
-          <a href="#egitimler">Eğitimler</a>
-          <button type="button" onClick={() => open("gonullu")}>
-            Gönüllü Ol
-          </button>
-          <a href="#iletisim">İletişim</a>
-        </nav>
-
-        <a href="#destek" className="hero__cta">
-          Bağış Yap
-        </a>
-      </header>
-
       <div id="anasayfa" className="hero">
         {/* TEZHİP ZEMİNİ — tüm hero alanını kaplayan gerçek doku */}
         <div className="hero__ornament" aria-hidden="true" />

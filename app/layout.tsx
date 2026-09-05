@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { Amiri, Aref_Ruqaa, Berkshire_Swash, Cormorant_Garamond, Manrope } from "next/font/google";
+import { FloatingWhatsApp } from "@/components/layout/floating-whatsapp";
+import { Footer } from "@/components/layout/footer";
+import { SiteHeader } from "@/components/layout/site-header";
+import { InquiryModalProvider } from "@/components/ui/inquiry-modal";
 import "./globals.css";
 
 const description =
@@ -61,7 +65,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="tr">
-      <body className={`${cormorant.variable} ${manrope.variable} ${amiri.variable} ${arefRuqaa.variable} ${berkshireSwash.variable}`}>{children}</body>
+      <body className={`${cormorant.variable} ${manrope.variable} ${amiri.variable} ${arefRuqaa.variable} ${berkshireSwash.variable}`}>
+        <InquiryModalProvider>
+          <SiteHeader />
+          {children}
+          <Footer />
+          <FloatingWhatsApp />
+        </InquiryModalProvider>
+      </body>
     </html>
   );
 }

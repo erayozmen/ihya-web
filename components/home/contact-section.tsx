@@ -2,7 +2,10 @@ import { Mail, MapPin, MessageCircle, Navigation, Phone } from "lucide-react";
 import Image from "next/image";
 import { Container } from "@/components/layout/container";
 import { SectionLabel } from "@/components/ui/section-label";
+import { FacebookIcon, InstagramIcon } from "@/components/ui/social-icons";
 import { contactInfo, corporateMedia, socialLinks } from "@/lib/home-data";
+
+const socialIcons = { Instagram: InstagramIcon, Facebook: FacebookIcon, YouTube: null, X: null } as const;
 
 export function ContactSection() {
   const socialHandles = socialLinks.filter((social) => social.handle);
@@ -17,9 +20,23 @@ export function ContactSection() {
           <h2>İletişimde Kalalım</h2>
           {socialHandles.length > 0 && (
             <div className="contact__social-handles" aria-label="Sosyal medya hesapları">
-              {socialHandles.map((social) => (
-                social.href ? <a href={social.href} target="_blank" rel="noopener noreferrer" key={social.platform}><small>{social.platform}</small>{social.handle}</a> : <span key={social.platform}><small>{social.platform}</small>{social.handle}</span>
-              ))}
+              {socialHandles.map((social) => {
+                const Icon = socialIcons[social.platform];
+                return social.href && Icon ? (
+                  <a
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-icon-link"
+                    aria-label={`${social.platform} — ${social.handle}`}
+                    key={social.platform}
+                  >
+                    <Icon aria-hidden="true" />
+                  </a>
+                ) : (
+                  <span key={social.platform}><small>{social.platform}</small>{social.handle}</span>
+                );
+              })}
             </div>
           )}
         </div>

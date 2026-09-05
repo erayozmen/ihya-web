@@ -1,7 +1,9 @@
 import { Bell, CalendarDays, Clock3, Landmark } from "lucide-react";
 import { Container } from "@/components/layout/container";
-import { SectionLabel } from "@/components/ui/section-label";
+import { GooglePlayIcon } from "@/components/ui/social-icons";
 import { mobileAppConfig, mobileFeatures, type MobileFeature } from "@/lib/home-data";
+import { SectionLabel } from "@/components/ui/section-label";
+import { GOOGLE_PLAY_URL } from "@/lib/routes";
 import { PhoneMockup } from "./phone-mockup";
 
 const featureIcons: Record<MobileFeature["icon"], typeof Clock3> = {
@@ -40,12 +42,21 @@ export function MobileAppSection() {
               );
             })}
           </div>
-          {(mobileAppConfig.appStoreUrl || mobileAppConfig.googlePlayUrl) && (
-            <div className="mobile-app__stores">
-              {mobileAppConfig.appStoreUrl && <a href={mobileAppConfig.appStoreUrl} className="store-button"><small>İndirin</small><strong>App Store</strong></a>}
-              {mobileAppConfig.googlePlayUrl && <a href={mobileAppConfig.googlePlayUrl} className="store-button"><small>Edinin</small><strong>Google Play</strong></a>}
-            </div>
-          )}
+          <div className="mobile-app__stores">
+            {mobileAppConfig.appStoreUrl && <a href={mobileAppConfig.appStoreUrl} className="store-button"><small>İndirin</small><strong>App Store</strong></a>}
+            {GOOGLE_PLAY_URL ? (
+              <a href={GOOGLE_PLAY_URL} className="store-button store-button--play">
+                <GooglePlayIcon aria-hidden="true" />
+                <span><small>Edinin</small><strong>Google Play</strong></span>
+              </a>
+            ) : (
+              <span className="store-button store-button--play store-button--soon" aria-disabled="true">
+                <GooglePlayIcon aria-hidden="true" />
+                <span><small>Google Play&apos;de</small><strong>Çok Yakında</strong></span>
+                <em className="store-button__badge">Yakında</em>
+              </span>
+            )}
+          </div>
         </div>
       </Container>
     </section>

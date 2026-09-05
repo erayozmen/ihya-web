@@ -243,9 +243,11 @@ export const contactInfo: ContactInfo = {
 };
 
 export const socialLinks: SocialLink[] = [
-  { platform: "Instagram", handle: "@tekirdagihya" },
+  // TODO: Instagram hesabı doğrulandı; Facebook adresi henüz teyit edilmedi —
+  // dernek yönetimi kesin linki verince güncellenecek.
+  { platform: "Instagram", handle: "@ihyadernegi", href: "https://instagram.com/ihyadernegi" },
   { platform: "YouTube" },
-  { platform: "Facebook", handle: "@tekirdagihya" },
+  { platform: "Facebook", handle: "@ihyadernegi", href: "https://facebook.com/ihyadernegi" },
   { platform: "X" },
 ];
 
