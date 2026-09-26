@@ -20,8 +20,8 @@ export function EducationSection() {
               Kur’an-ı Kerim’den ilmihale, tecvitten Arapçaya uzanan eğitimlerimizle öğrenmeyi
               hayat boyu süren bir yolculuğa dönüştürüyoruz.
             </p>
-            <Link href="#iletisim" className="education__all-link">
-              Tüm Eğitimleri Keşfet <ArrowRight size={16} aria-hidden="true" />
+            <Link href="/#iletisim" className="education__all-link">
+              Eğitimler Hakkında Bilgi Alın <ArrowRight size={16} aria-hidden="true" />
             </Link>
           </div>
         </div>

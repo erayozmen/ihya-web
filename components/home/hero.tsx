@@ -3,6 +3,9 @@
 import Image from "next/image";
 import { useInquiryModal } from "@/components/ui/inquiry-modal";
 
+// Mirrors .hero__seal width: clamp(208px, 17vw, 293px), and 120px max on phones.
+const SEAL_SIZES = "(max-width: 640px) 120px, (max-width: 1224px) 208px, (max-width: 1724px) 17vw, 293px";
+
 export function Hero() {
   const { open } = useInquiryModal();
 
@@ -13,22 +16,22 @@ export function Hero() {
         <div className="hero__ornament" aria-hidden="true" />
 
         {/* ANA İÇERİK */}
-        <main className="hero__main">
+        <div className="hero__main">
           <div className="hero__content">
             <div className="hero__seals">
               <span className="hero__seal">
-                <Image src="/images/hero/Muhammed-muhur.png" alt="Muhammed (s.a.v)" fill sizes="200px" />
+                <Image src="/images/hero/Muhammed-muhur.png" alt="Muhammed (s.a.v)" fill sizes={SEAL_SIZES} />
               </span>
               <span className="hero__seal">
-                <Image src="/images/hero/Allah-muhur.png" alt="Allah (c.c)" fill sizes="200px" />
+                <Image src="/images/hero/Allah-muhur.png" alt="Allah (c.c)" fill sizes={SEAL_SIZES} />
               </span>
             </div>
 
-            <h2 className="hero__heading">
+            <h1 className="hero__heading">
               İnsanı İhya,
               <br />
               Toplumu İnşa.
-            </h2>
+            </h1>
 
             <p className="hero__description">
               İlim, irfan ve gönüllülük ekseninde gönülleri buluşturarak insanı ihya etmeyi, toplumu inşa etmeyi
@@ -58,7 +61,7 @@ export function Hero() {
               </span>
             </span>
           </div>
-        </main>
+        </div>
       </div>
     </>
   );

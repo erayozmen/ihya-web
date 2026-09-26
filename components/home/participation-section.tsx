@@ -24,37 +24,29 @@ export function ParticipationSection() {
           {participationOptions.map((option, index) => {
             const Icon = optionIcons[option.id];
             const number = String(index + 1).padStart(2, "0");
-
-            if (option.id === "gonullu") {
-              return (
-                <button
-                  type="button"
-                  id={option.id}
-                  className="participation__option"
-                  key={option.id}
-                  onClick={() => open("gonullu")}
-                >
-                  <span className="participation__option-icon" aria-hidden="true"><Icon size={22} strokeWidth={1.5} /></span>
-                  <span className="participation__option-number">{number}</span>
-                  <div><h3>{option.title}</h3><p>{option.description}</p></div>
-                  <ArrowUpRight size={20} aria-hidden="true" />
-                </button>
-              );
-            }
-
-            return option.href ? (
-              <Link id={option.id} href={option.href} className="participation__option" key={option.id}>
+            const content = (
+              <>
                 <span className="participation__option-icon" aria-hidden="true"><Icon size={22} strokeWidth={1.5} /></span>
                 <span className="participation__option-number">{number}</span>
                 <div><h3>{option.title}</h3><p>{option.description}</p></div>
                 <ArrowUpRight size={20} aria-hidden="true" />
-              </Link>
+              </>
+            );
+
+            return option.inquiry ? (
+              <button
+                type="button"
+                id={option.id}
+                className="participation__option"
+                key={option.id}
+                onClick={() => open(option.inquiry)}
+              >
+                {content}
+              </button>
             ) : (
-              <article id={option.id} className="participation__option participation__option--static" key={option.id}>
-                <span className="participation__option-icon" aria-hidden="true"><Icon size={22} strokeWidth={1.5} /></span>
-                <span className="participation__option-number">{number}</span>
-                <div><h3>{option.title}</h3><p>{option.description}</p></div>
-              </article>
+              <Link id={option.id} href={option.href} className="participation__option" key={option.id}>
+                {content}
+              </Link>
             );
           })}
         </div>

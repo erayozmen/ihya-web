@@ -13,14 +13,13 @@ function getCenterImages(center: CenterItem): ImageAsset[] {
   return [{ image: center.image, imageAlt: center.imageAlt, imageObjectPosition: center.imageObjectPosition }, ...(center.galleryImages ?? [])];
 }
 
-export function MedreseSelector({ centers, hasError = false }: { centers: CenterItem[]; hasError?: boolean }) {
+// The empty/error state lives in MedresesSection; this only renders real centers.
+export function MedreseSelector({ centers }: { centers: CenterItem[] }) {
   const [selectedId, setSelectedId] = useState(centers[0]?.id);
   const selected = centers.find((center) => center.id === selectedId) ?? centers[0];
   const [activeImagePath, setActiveImagePath] = useState(selected?.image);
 
-  if (!selected) {
-    return hasError ? <section className="medreses section--textured" id="medreseler"><Container><p className="events__data-state" role="status">Merkez bilgileri şu anda görüntülenemiyor.</p></Container></section> : null;
-  }
+  if (!selected) return null;
 
   const images = getCenterImages(selected);
   const activeImage = images.find((image) => image.image === activeImagePath) ?? images[0];

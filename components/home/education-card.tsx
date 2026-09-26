@@ -1,7 +1,6 @@
 import { ArrowUpRight, BookOpen, Languages, ScrollText, Volume2, type LucideIcon } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
-import type { EducationCategory } from "@/lib/home-data";
+import { contactInfo, type EducationCategory } from "@/lib/home-data";
 
 type EducationCardProps = {
   category: EducationCategory;
@@ -17,6 +16,11 @@ const categoryIcons: Record<string, LucideIcon> = {
 
 export function EducationCard({ category, index }: EducationCardProps) {
   const Icon = categoryIcons[category.id] ?? BookOpen;
+  // There is no per-course detail page, so the card asks about this course
+  // directly on WhatsApp instead of pretending to open one.
+  const inquiryUrl = contactInfo.whatsappUrl
+    ? `${contactInfo.whatsappUrl}?text=${encodeURIComponent(`Merhaba, ${category.title} hakkında bilgi almak istiyorum.`)}`
+    : undefined;
 
   return (
     <article className={`education-card education-card--${category.variant}`}>
@@ -48,9 +52,17 @@ export function EducationCard({ category, index }: EducationCardProps) {
             <li key={course}>{course}</li>
           ))}
         </ul>
-        <Link href="#iletisim" className="education-card__link" aria-label={`${category.title} hakkında bilgi alın`}>
-          İncele <ArrowUpRight size={15} aria-hidden="true" />
-        </Link>
+        {inquiryUrl && (
+          <a
+            href={inquiryUrl}
+            className="education-card__link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${category.title} hakkında WhatsApp üzerinden bilgi alın`}
+          >
+            Bilgi Al <ArrowUpRight size={15} aria-hidden="true" />
+          </a>
+        )}
       </div>
     </article>
   );

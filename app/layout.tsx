@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
-import { Amiri, Aref_Ruqaa, Berkshire_Swash, Cormorant_Garamond, Manrope } from "next/font/google";
+import { Berkshire_Swash, Cormorant_Garamond, Manrope } from "next/font/google";
 import { FloatingWhatsApp } from "@/components/layout/floating-whatsapp";
 import { Footer } from "@/components/layout/footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { InquiryModalProvider } from "@/components/ui/inquiry-modal";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, baseOpenGraph } from "@/lib/site";
 import "./globals.css";
-
-const description =
-  "Tekirdağ İhya Derneği; eğitim, sohbet, medrese ve sosyal faaliyetlerle Süleymanpaşa’da ilim, irfan ve gönüllülük çalışmalarını sürdürmektedir.";
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-heading",
@@ -23,20 +20,6 @@ const manrope = Manrope({
   display: "swap",
 });
 
-const amiri = Amiri({
-  variable: "--font-arabic",
-  subsets: ["arabic"],
-  display: "swap",
-  weight: ["400", "700"],
-});
-
-const arefRuqaa = Aref_Ruqaa({
-  variable: "--font-arabic-display",
-  subsets: ["arabic", "latin"],
-  display: "swap",
-  weight: ["700"],
-});
-
 const berkshireSwash = Berkshire_Swash({
   variable: "--font-calligraphy",
   subsets: ["latin", "latin-ext"],
@@ -45,28 +28,29 @@ const berkshireSwash = Berkshire_Swash({
 });
 
 export const metadata: Metadata = {
-  title: "Tekirdağ İhya Derneği",
-  description,
-  metadataBase: siteUrl ? new URL(siteUrl) : undefined,
+  title: SITE_NAME,
+  description: SITE_DESCRIPTION,
+  metadataBase: new URL(SITE_URL),
   openGraph: {
-    type: "website",
-    locale: "tr_TR",
-    siteName: "Tekirdağ İhya Derneği",
-    title: "Tekirdağ İhya Derneği",
-    description,
+    ...baseOpenGraph,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
   },
   twitter: {
-    card: "summary",
-    title: "Tekirdağ İhya Derneği",
-    description,
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
   },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="tr">
-      <body className={`${cormorant.variable} ${manrope.variable} ${amiri.variable} ${arefRuqaa.variable} ${berkshireSwash.variable}`}>
+      <body className={`${cormorant.variable} ${manrope.variable} ${berkshireSwash.variable}`}>
         <InquiryModalProvider>
+          <a href="#main-content" className="skip-link">
+            İçeriğe geç
+          </a>
           <SiteHeader />
           {children}
           <Footer />

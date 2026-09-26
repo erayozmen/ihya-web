@@ -1,13 +1,21 @@
-import { Droplets, GraduationCap, HeartHandshake, Landmark } from "lucide-react";
+import { Droplets, GraduationCap, HeartHandshake, Landmark, MessageCircle, Phone } from "lucide-react";
 import type { Metadata } from "next";
 import type { LucideIcon } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { IbanCopyButton } from "@/components/donate/iban-copy-button";
 import { SectionLabel } from "@/components/ui/section-label";
+import { contactInfo } from "@/lib/home-data";
+import { DONATE_PATH } from "@/lib/routes";
+import { SITE_NAME, baseOpenGraph } from "@/lib/site";
+
+const title = `Bağış Yap — ${SITE_NAME}`;
+const description = "Hafız öğrencilerimize, Afrika'daki kardeşlerimize, su kuyusu ve medrese çalışmalarımıza destek olun.";
 
 export const metadata: Metadata = {
-  title: "Bağış Yap — Tekirdağ İhya Derneği",
-  description: "Hafız öğrencilerimize, Afrika'daki kardeşlerimize, su kuyusu ve medrese çalışmalarımıza destek olun.",
+  title,
+  description,
+  alternates: { canonical: DONATE_PATH },
+  openGraph: { ...baseOpenGraph, url: DONATE_PATH, title, description },
 };
 
 type DonationCategory = {
@@ -43,15 +51,17 @@ const donationCategories: DonationCategory[] = [
   },
 ];
 
-// TODO: Gerçek IBAN ve banka bilgisi ile değiştirilecek.
-const BANK_NAME = "[Banka Adı] Bankası";
-// TODO: Gerçek IBAN ve banka bilgisi ile değiştirilecek.
-const IBAN = "TR00 0000 0000 0000 0000 0000 00";
+// TODO: Dernek yönetimi gerçek banka adı ve IBAN'ı iletince buraya girilecek,
+// ör. { bankName: "… Bankası", iban: "TR.. …" }. null olduğu sürece sayfa
+// sahte bir IBAN yerine "yakında" notu ve iletişim kanallarını gösterir.
+// (`as` keeps TypeScript from narrowing the constant to `null` and flagging
+// the account branch as unreachable.)
+const BANK_ACCOUNT = null as { bankName: string; iban: string } | null;
 const ACCOUNT_HOLDER = "Tekirdağ İhya Derneği";
 
 export default function DonatePage() {
   return (
-    <main className="donate-page">
+    <main className="donate-page" id="main-content">
       <Container className="donate-page__intro">
         <SectionLabel>Bağış Yap</SectionLabel>
         <h1>Bu Hayra Ortak Olun</h1>
@@ -77,27 +87,52 @@ export default function DonatePage() {
 
         <aside className="donate-bank">
           <h2>Banka Hesap Bilgileri</h2>
-          <dl>
-            <div>
-              <dt>Banka</dt>
-              <dd>{BANK_NAME}</dd>
-            </div>
-            <div>
-              <dt>Hesap Sahibi</dt>
-              <dd>{ACCOUNT_HOLDER}</dd>
-            </div>
-            <div>
-              <dt>IBAN</dt>
-              <dd className="donate-bank__iban">
-                <span>{IBAN}</span>
-                <IbanCopyButton iban={IBAN} />
-              </dd>
-            </div>
-          </dl>
-          <p className="donate-bank__note">
-            Bağışınızın açıklama kısmına bağış amacını (ör. &quot;Hafız Öğrenci&quot;) belirtmeniz, katkınızın
-            doğru alana ulaşmasına yardımcı olur.
-          </p>
+          {BANK_ACCOUNT ? (
+            <>
+              <dl>
+                <div>
+                  <dt>Banka</dt>
+                  <dd>{BANK_ACCOUNT.bankName}</dd>
+                </div>
+                <div>
+                  <dt>Hesap Sahibi</dt>
+                  <dd>{ACCOUNT_HOLDER}</dd>
+                </div>
+                <div>
+                  <dt>IBAN</dt>
+                  <dd className="donate-bank__iban">
+                    <span>{BANK_ACCOUNT.iban}</span>
+                    <IbanCopyButton iban={BANK_ACCOUNT.iban} />
+                  </dd>
+                </div>
+              </dl>
+              <p className="donate-bank__note">
+                Bağışınızın açıklama kısmına bağış amacını (ör. &quot;Hafız Öğrenci&quot;) belirtmeniz, katkınızın
+                doğru alana ulaşmasına yardımcı olur.
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="donate-bank__pending">
+                Banka hesap bilgilerimiz yakında bu sayfada paylaşılacaktır. Bağış yapmak için şimdilik bizimle
+                telefon veya WhatsApp üzerinden iletişime geçebilirsiniz.
+              </p>
+              <div className="donate-bank__contact">
+                {contactInfo.whatsappUrl && (
+                  <a href={contactInfo.whatsappUrl} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle size={17} aria-hidden="true" />
+                    WhatsApp ile Yazın
+                  </a>
+                )}
+                {contactInfo.phone && contactInfo.phoneUrl && (
+                  <a href={contactInfo.phoneUrl}>
+                    <Phone size={17} aria-hidden="true" />
+                    {contactInfo.phone}
+                  </a>
+                )}
+              </div>
+            </>
+          )}
         </aside>
       </Container>
     </main>

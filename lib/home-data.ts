@@ -1,3 +1,6 @@
+import type { InquirySource } from "@/components/ui/inquiry-modal";
+import { DONATE_PATH } from "@/lib/routes";
+
 export type ImpactStat = {
   value: string;
   label: string;
@@ -53,7 +56,7 @@ export type FieldActivity = OptionalImageAsset & {
 
 export type MobileFeature = {
   title: string;
-  icon: "clock" | "calendar" | "landmark" | "bell";
+  icon: "clock" | "sparkles" | "calendar" | "landmark";
 };
 
 export type ContentItem = OptionalImageAsset & {
@@ -70,12 +73,13 @@ export type CorporateMedia = OptionalImageAsset & {
   purpose: "headquarters" | "institutional";
 };
 
+// Each option either navigates (href) or opens the shared inquiry form
+// (inquiry) — never both, and never a placeholder link.
 export type ParticipationOption = {
   id: string;
   title: string;
   description: string;
-  href?: string;
-};
+} & ({ href: string; inquiry?: undefined } | { inquiry: InquirySource; href?: undefined });
 
 export type ContactInfo = {
   phone?: string;
@@ -93,10 +97,10 @@ export type SocialLink = {
   href?: string;
 };
 
+// Real İhya Mobil screenshots (status/navigation bars cropped off). The first
+// one is the featured phone, the rest sit behind it.
 export type MobileAppConfig = {
-  screenshots: ImageAsset[];
-  appStoreUrl?: string;
-  googlePlayUrl?: string;
+  screenshots: [ImageAsset, ...ImageAsset[]];
 };
 
 // Placeholder metrics: replace with verified institutional figures before launch.
@@ -185,16 +189,26 @@ export const fieldActivities: FieldActivity[] = [
 
 export const mobileFeatures: MobileFeature[] = [
   { title: "Namaz Vakitleri", icon: "clock" },
+  { title: "Zikirler & Dualar", icon: "sparkles" },
   { title: "Etkinlikler", icon: "calendar" },
   { title: "Medreseler", icon: "landmark" },
-  { title: "Bildirimler", icon: "bell" },
 ];
 
-// TODO: Add verified screenshots and store URLs when the application is published.
 export const mobileAppConfig: MobileAppConfig = {
-  screenshots: [],
-  appStoreUrl: undefined,
-  googlePlayUrl: undefined,
+  screenshots: [
+    {
+      image: "/images/mobile-app/ana-sayfa.webp",
+      imageAlt: "İhya Mobil ana sayfası: günün ayeti, kıble yönü ve sıradaki namaz vakti",
+    },
+    {
+      image: "/images/mobile-app/zikirlerim.webp",
+      imageAlt: "İhya Mobil Zikirlerim ekranı: günlük zikir hedefleri ve ilerleme",
+    },
+    {
+      image: "/images/mobile-app/etkinlikler.webp",
+      imageAlt: "İhya Mobil Etkinlikler ekranı: yaklaşan ve geçmiş etkinlikler",
+    },
+  ],
 };
 
 // Placeholder content: replace these records when verified media is available.
@@ -225,11 +239,12 @@ export const contentItems: ContentItem[] = [
   },
 ];
 
-// TODO: Replace anchor targets with real routes or forms when available.
+// "Üye Ol" uses the existing "Bize Katılın" form (source "katil"), the same one
+// the hero's "Bize Katıl" button opens.
 export const participationOptions: ParticipationOption[] = [
-  { id: "uyelik", title: "Üye Ol", description: "Derneğimizin çalışmalarında daha aktif yer al." },
-  { id: "gonullu", title: "Gönüllü Ol", description: "Faaliyet ve organizasyonlarda desteğinle yanımızda ol." },
-  { id: "destek", title: "Bize Destek Ol", description: "Eğitim, faaliyet ve sosyal çalışmaların devamına katkıda bulun." },
+  { id: "uyelik", title: "Üye Ol", description: "Derneğimizin çalışmalarında daha aktif yer al.", inquiry: "katil" },
+  { id: "gonullu", title: "Gönüllü Ol", description: "Faaliyet ve organizasyonlarda desteğinle yanımızda ol.", inquiry: "gonullu" },
+  { id: "destek", title: "Bize Destek Ol", description: "Eğitim, faaliyet ve sosyal çalışmaların devamına katkıda bulun.", href: DONATE_PATH },
 ];
 
 export const contactInfo: ContactInfo = {

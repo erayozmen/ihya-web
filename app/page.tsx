@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { AboutPreviewSection } from "@/components/home/about-preview-section";
 import { ContactSection } from "@/components/home/contact-section";
 import { ContentSection } from "@/components/home/content-section";
@@ -9,10 +10,16 @@ import { MedresesSection } from "@/components/home/medreses-section";
 import { MobileAppSection } from "@/components/home/mobile-app-section";
 import { ParticipationSection } from "@/components/home/participation-section";
 import { UpcomingEvents } from "@/components/home/upcoming-events";
+import { SITE_DESCRIPTION, SITE_NAME, baseOpenGraph } from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+  openGraph: { ...baseOpenGraph, url: "/", title: SITE_NAME, description: SITE_DESCRIPTION },
+};
 
 export default function Home() {
   return (
-    <main>
+    <main id="main-content">
       <Hero />
       <ImpactStats />
       <AboutPreviewSection />

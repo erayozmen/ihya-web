@@ -50,18 +50,46 @@ export function InquiryModalProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// Lightweight bot filtering that needs no database change: a hidden honeypot
+// field real visitors never fill, and a minimum time between the form opening
+// and submitting. Suspected bots get the normal success screen but nothing is
+// sent, so they have no signal to adapt to.
+const HONEYPOT_FIELD = "website";
+const MIN_FILL_MS = 3000;
+const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]):not([tabindex="-1"]), textarea:not([disabled]), select:not([disabled])';
+
 function InquiryModal({ source, onClose }: { source: InquirySource; onClose: () => void }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const firstFieldRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const openedAtRef = useRef(0);
   const { title, description } = copy[source];
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     firstFieldRef.current?.focus();
+    openedAtRef.current = Date.now();
 
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+      // Focus trap: Tab / Shift+Tab cycle inside the dialog only.
+      if (event.key !== "Tab" || !dialogRef.current) return;
+      const focusable = [...dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE)];
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+      if (event.shiftKey && (active === first || !dialogRef.current.contains(active))) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (active === last || !dialogRef.current.contains(active))) {
+        event.preventDefault();
+        first.focus();
+      }
     }
     document.addEventListener("keydown", onKeyDown);
 
@@ -77,11 +105,19 @@ function InquiryModal({ source, onClose }: { source: InquirySource; onClose: () 
 
     const form = event.currentTarget;
     const data = new FormData(form);
+    const field = (name: string) => String(data.get(name) ?? "").trim();
+
+    if (field(HONEYPOT_FIELD) || Date.now() - openedAtRef.current < MIN_FILL_MS) {
+      setStatus("success");
+      form.reset();
+      return;
+    }
+
     const payload = {
-      name: data.get("name"),
-      phone: data.get("phone"),
-      email: data.get("email"),
-      message: data.get("message") || null,
+      name: field("name"),
+      phone: field("phone"),
+      email: field("email"),
+      message: field("message") || null,
       source,
     };
 
@@ -120,7 +156,7 @@ function InquiryModal({ source, onClose }: { source: InquirySource; onClose: () 
         if (event.target === event.currentTarget) onClose();
       }}
     >
-      <div className="inquiry-modal" role="dialog" aria-modal="true" aria-labelledby="inquiry-modal-title">
+      <div className="inquiry-modal" role="dialog" aria-modal="true" aria-labelledby="inquiry-modal-title" ref={dialogRef}>
         <button type="button" className="inquiry-modal__close" onClick={onClose} aria-label="Kapat">
           ×
         </button>
@@ -140,19 +176,31 @@ function InquiryModal({ source, onClose }: { source: InquirySource; onClose: () 
             <form className="inquiry-modal__form" onSubmit={handleSubmit}>
               <label>
                 Ad Soyad
-                <input ref={firstFieldRef} type="text" name="name" autoComplete="name" required />
+                <input ref={firstFieldRef} type="text" name="name" autoComplete="name" required minLength={3} maxLength={100} />
               </label>
               <label>
                 Telefon
-                <input type="tel" name="phone" autoComplete="tel" required />
+                <input
+                  type="tel"
+                  name="phone"
+                  autoComplete="tel"
+                  required
+                  maxLength={20}
+                  pattern="[0-9 +\(\)\-]{10,20}"
+                  title="Lütfen geçerli bir telefon numarası girin (ör. 0551 911 24 35)."
+                />
               </label>
               <label>
                 E-posta
-                <input type="email" name="email" autoComplete="email" required />
+                <input type="email" name="email" autoComplete="email" required maxLength={150} />
               </label>
               <label>
                 Not <span>(opsiyonel)</span>
-                <textarea name="message" rows={3} />
+                <textarea name="message" rows={3} maxLength={1000} />
+              </label>
+              <label className="inquiry-modal__trap" aria-hidden="true">
+                Web siteniz
+                <input type="text" name={HONEYPOT_FIELD} tabIndex={-1} autoComplete="off" />
               </label>
 
               {status === "error" && (
