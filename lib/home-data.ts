@@ -251,8 +251,8 @@ export const contactInfo: ContactInfo = {
   phone: "+90 (551) 911 24 35",
   phoneUrl: "tel:+905519112435",
   whatsappUrl: "https://wa.me/905519112435",
-  email: "tekirdagihya@gmail.com",
-  emailUrl: "mailto:tekirdagihya@gmail.com",
+  email: "tekirdagihyadernegi@gmail.com",
+  emailUrl: "mailto:tekirdagihyadernegi@gmail.com",
   address: "Çınarlı Mah. Şehit Osman Cad. No: 100/1 Süleymanpaşa/Tekirdağ",
   mapUrl: "https://maps.app.goo.gl/8UekDkziAkdjajvV9",
 };
