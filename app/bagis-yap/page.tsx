@@ -4,6 +4,7 @@ import type { LucideIcon } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { IbanCopyButton } from "@/components/donate/iban-copy-button";
 import { SectionLabel } from "@/components/ui/section-label";
+import { getDonationInfo } from "@/lib/data/donation";
 import { contactInfo } from "@/lib/home-data";
 import { DONATE_PATH } from "@/lib/routes";
 import { SITE_NAME, baseOpenGraph } from "@/lib/site";
@@ -51,15 +52,12 @@ const donationCategories: DonationCategory[] = [
   },
 ];
 
-// TODO: Dernek yönetimi gerçek banka adı ve IBAN'ı iletince buraya girilecek,
-// ör. { bankName: "… Bankası", iban: "TR.. …" }. null olduğu sürece sayfa
-// sahte bir IBAN yerine "yakında" notu ve iletişim kanallarını gösterir.
-// (`as` keeps TypeScript from narrowing the constant to `null` and flagging
-// the account branch as unreachable.)
-const BANK_ACCOUNT = null as { bankName: string; iban: string } | null;
-const ACCOUNT_HOLDER = "Tekirdağ İhya Derneği";
+// Account details come from ihya-admin via Supabase (see lib/data/donation.ts).
+// With no IBAN saved there — or Supabase unreachable — the page shows the
+// "yakında" note and contact channels instead of any placeholder account.
+export default async function DonatePage() {
+  const { data: donation } = await getDonationInfo();
 
-export default function DonatePage() {
   return (
     <main className="donate-page" id="main-content">
       <Container className="donate-page__intro">
@@ -87,22 +85,19 @@ export default function DonatePage() {
 
         <aside className="donate-bank">
           <h2>Banka Hesap Bilgileri</h2>
-          {BANK_ACCOUNT ? (
+          {donation ? (
             <>
+              {donation.description && <p className="donate-bank__lead">{donation.description}</p>}
               <dl>
                 <div>
-                  <dt>Banka</dt>
-                  <dd>{BANK_ACCOUNT.bankName}</dd>
-                </div>
-                <div>
                   <dt>Hesap Sahibi</dt>
-                  <dd>{ACCOUNT_HOLDER}</dd>
+                  <dd>{donation.accountHolder}</dd>
                 </div>
                 <div>
                   <dt>IBAN</dt>
                   <dd className="donate-bank__iban">
-                    <span>{BANK_ACCOUNT.iban}</span>
-                    <IbanCopyButton iban={BANK_ACCOUNT.iban} />
+                    <span>{donation.ibanDisplay}</span>
+                    {donation.ibanForCopy && <IbanCopyButton iban={donation.ibanForCopy} />}
                   </dd>
                 </div>
               </dl>

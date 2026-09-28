@@ -251,16 +251,16 @@ export const contactInfo: ContactInfo = {
   phone: "+90 (551) 911 24 35",
   phoneUrl: "tel:+905519112435",
   whatsappUrl: "https://wa.me/905519112435",
-  email: "bilgi@tekirdagihya.org",
-  emailUrl: "mailto:bilgi@tekirdagihya.org",
+  email: "tekirdagihya@gmail.com",
+  emailUrl: "mailto:tekirdagihya@gmail.com",
   address: "Çınarlı Mah. Şehit Osman Cad. No: 100/1 Süleymanpaşa/Tekirdağ",
   mapUrl: "https://maps.app.goo.gl/8UekDkziAkdjajvV9",
 };
 
 export const socialLinks: SocialLink[] = [
-  // TODO: Instagram hesabı doğrulandı; Facebook adresi henüz teyit edilmedi —
-  // dernek yönetimi kesin linki verince güncellenecek.
-  { platform: "Instagram", handle: "@ihyadernegi", href: "https://instagram.com/ihyadernegi" },
+  // Instagram: resmi hesap @tekirdagihya (dernek yönetimi teyit etti). Facebook
+  // adresi henüz teyit edilmedi — kesin link gelince güncellenecek.
+  { platform: "Instagram", handle: "@tekirdagihya", href: "https://instagram.com/tekirdagihya" },
   { platform: "YouTube" },
   { platform: "Facebook", handle: "@ihyadernegi", href: "https://facebook.com/ihyadernegi" },
   { platform: "X" },
