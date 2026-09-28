@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/layout/container";
 import { SectionLabel } from "@/components/ui/section-label";
+import { ROUTES } from "@/lib/routes";
 import { SITE_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -21,10 +22,10 @@ export default function NotFound() {
           merkezlerimize ulaşabilirsiniz.
         </p>
         <div className="not-found__actions">
-          <Link href="/" className="hero__button hero__button--primary">
+          <Link href={ROUTES.home} className="hero__button hero__button--primary">
             Ana Sayfaya Dön
           </Link>
-          <Link href="/#iletisim" className="hero__button hero__button--secondary">
+          <Link href={ROUTES.contact} className="hero__button hero__button--secondary">
             Bize Ulaşın
           </Link>
         </div>

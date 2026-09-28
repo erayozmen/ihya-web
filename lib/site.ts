@@ -17,3 +17,14 @@ export const baseOpenGraph = {
   siteName: SITE_NAME,
   images: [{ url: "/opengraph-image.jpg", width: 1200, height: 630, alt: "Tekirdağ İhya Derneği merkezinin logolu ön cephesi" }],
 } satisfies Metadata["openGraph"];
+
+// Title, description, canonical and Open Graph for one standalone page.
+export function pageMetadata(path: string, heading: string, description: string): Metadata {
+  const title = `${heading} — ${SITE_NAME}`;
+  return {
+    title,
+    description,
+    alternates: { canonical: path },
+    openGraph: { ...baseOpenGraph, url: path, title, description },
+  };
+}

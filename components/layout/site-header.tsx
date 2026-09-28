@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { FacebookIcon, GooglePlayIcon, InstagramIcon } from "@/components/ui/social-icons";
 import { useInquiryModal } from "@/components/ui/inquiry-modal";
 import { socialLinks } from "@/lib/home-data";
-import { DONATE_PATH, GOOGLE_PLAY_URL } from "@/lib/routes";
+import { DONATE_PATH, GOOGLE_PLAY_URL, ROUTES } from "@/lib/routes";
 
 const instagram = socialLinks.find((social) => social.platform === "Instagram");
 const facebook = socialLinks.find((social) => social.platform === "Facebook");
@@ -88,7 +88,7 @@ export function SiteHeader() {
   return (
     <>
       <header className="hero__header" ref={headerRef}>
-        <Link href="/#anasayfa" className="hero__brand">
+        <Link href={ROUTES.home} className="hero__brand">
           <Image src="/brand/ihya-logo.png" alt="Tekirdağ İhya Derneği" width={40} height={40} className="hero__brand-logo" />
           <span>
             <strong>Tekirdağ İhya Derneği</strong>
@@ -97,14 +97,14 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hero__nav" aria-label="Ana menü">
-          <Link href="/#anasayfa">Ana Sayfa</Link>
-          <Link href="/#hakkimizda">Hakkımızda</Link>
-          <Link href="/#faaliyetler">Faaliyetler</Link>
-          <Link href="/#egitimler">Eğitimler</Link>
+          <Link href={ROUTES.home}>Ana Sayfa</Link>
+          <Link href={ROUTES.about}>Hakkımızda</Link>
+          <Link href={ROUTES.activities}>Faaliyetler</Link>
+          <Link href={ROUTES.education}>Eğitimler</Link>
           <button type="button" onClick={() => open("gonullu")}>
             Gönüllü Ol
           </button>
-          <Link href="/#iletisim">İletişim</Link>
+          <Link href={ROUTES.contact}>İletişim</Link>
         </nav>
 
         <div className="hero__header-actions">
@@ -137,10 +137,10 @@ export function SiteHeader() {
         inert={!menuOpen}
       >
         <nav className="hero__mobile-links" aria-label="Mobil menü">
-          <Link href="/#anasayfa" onClick={() => setMenuOpen(false)}>Ana Sayfa</Link>
-          <Link href="/#hakkimizda" onClick={() => setMenuOpen(false)}>Hakkımızda</Link>
-          <Link href="/#faaliyetler" onClick={() => setMenuOpen(false)}>Faaliyetler</Link>
-          <Link href="/#egitimler" onClick={() => setMenuOpen(false)}>Eğitimler</Link>
+          <Link href={ROUTES.home} onClick={() => setMenuOpen(false)}>Ana Sayfa</Link>
+          <Link href={ROUTES.about} onClick={() => setMenuOpen(false)}>Hakkımızda</Link>
+          <Link href={ROUTES.activities} onClick={() => setMenuOpen(false)}>Faaliyetler</Link>
+          <Link href={ROUTES.education} onClick={() => setMenuOpen(false)}>Eğitimler</Link>
           <button
             type="button"
             onClick={() => {
@@ -150,7 +150,7 @@ export function SiteHeader() {
           >
             Gönüllü Ol
           </button>
-          <Link href="/#iletisim" onClick={() => setMenuOpen(false)}>İletişim</Link>
+          <Link href={ROUTES.contact} onClick={() => setMenuOpen(false)}>İletişim</Link>
         </nav>
         <Link href={DONATE_PATH} className="hero__cta hero__mobile-cta" onClick={() => setMenuOpen(false)}>
           Bağış Yap

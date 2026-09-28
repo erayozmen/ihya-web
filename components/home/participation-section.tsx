@@ -12,14 +12,14 @@ const optionIcons: Record<string, LucideIcon> = {
   destek: HeartHandshake,
 };
 
-export function ParticipationSection() {
+export function ParticipationSection({ headingLevel: Heading = "h2" }: { headingLevel?: "h1" | "h2" } = {}) {
   const { open } = useInquiryModal();
 
   return (
     <section className="participation section--textured-dark">
       <span className="section-divider" aria-hidden="true" />
       <Container>
-        <div className="participation__heading"><span>Birlikte İhya</span><h2>Bu Hayra Sen de Ortak Ol</h2><p>İhya’nın çalışmalarına üye olarak, gönüllü destek vererek veya imkânların ölçüsünde katkıda bulunarak sen de bu hayra ortak olabilirsin.</p></div>
+        <div className="participation__heading"><span>Birlikte İhya</span><Heading>Bu Hayra Sen de Ortak Ol</Heading><p>İhya’nın çalışmalarına üye olarak, gönüllü destek vererek veya imkânların ölçüsünde katkıda bulunarak sen de bu hayra ortak olabilirsin.</p></div>
         <div className="participation__options">
           {participationOptions.map((option, index) => {
             const Icon = optionIcons[option.id];

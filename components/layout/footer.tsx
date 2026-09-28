@@ -2,11 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { FacebookIcon, InstagramIcon } from "@/components/ui/social-icons";
 import { contactInfo, socialLinks } from "@/lib/home-data";
-import { DONATE_PATH } from "@/lib/routes";
+import { ROUTES } from "@/lib/routes";
 import { Container } from "./container";
 
-// Root-relative ("/#…") so the links also work from /bagis-yap and the 404 page.
-const footerLinks = [["Eğitimler", "/#egitimler"], ["Merkezlerimiz", "/#medreseler"], ["Faaliyetler", "/#faaliyetler"], ["İletişim", "/#iletisim"], ["Üyelik", "/#uyelik"], ["Destek", DONATE_PATH]] as const;
+const footerLinks = [["Eğitimler", ROUTES.education], ["Merkezlerimiz", ROUTES.centers], ["Faaliyetler", ROUTES.activities], ["İletişim", ROUTES.contact], ["Üyelik", ROUTES.membership], ["Destek", ROUTES.donate]] as const;
 
 const socialIcons = { Instagram: InstagramIcon, Facebook: FacebookIcon, YouTube: null, X: null } as const;
 

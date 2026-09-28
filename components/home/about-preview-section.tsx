@@ -3,7 +3,8 @@ import { Container } from "@/components/layout/container";
 import { SectionLabel } from "@/components/ui/section-label";
 import { corporateMedia } from "@/lib/home-data";
 
-export function AboutPreviewSection() {
+// headingLevel is "h1" on the standalone /hakkimizda page, "h2" on the homepage.
+export function AboutPreviewSection({ headingLevel: Heading = "h2" }: { headingLevel?: "h1" | "h2" } = {}) {
   const institutionalImage = corporateMedia.find((item) => item.purpose === "institutional");
 
   return (
@@ -12,11 +13,11 @@ export function AboutPreviewSection() {
       <Container>
         <SectionLabel>İhya’yı Tanıyın</SectionLabel>
         <div className="about-preview__layout">
-          <h2>
+          <Heading>
             Bir Gönlü İhya Etmek,
             <br />
             <em>Bir Toplumu İnşa Etmektir.</em>
-          </h2>
+          </Heading>
 
           <div className="about-preview__copy">
             <p>

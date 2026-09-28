@@ -7,7 +7,7 @@ import { contactInfo, corporateMedia, socialLinks } from "@/lib/home-data";
 
 const socialIcons = { Instagram: InstagramIcon, Facebook: FacebookIcon, YouTube: null, X: null } as const;
 
-export function ContactSection() {
+export function ContactSection({ headingLevel: Heading = "h2" }: { headingLevel?: "h1" | "h2" } = {}) {
   const socialHandles = socialLinks.filter((social) => social.handle);
   const headquartersImage = corporateMedia.find((item) => item.purpose === "headquarters");
 
@@ -17,7 +17,7 @@ export function ContactSection() {
       <Container className="contact__layout">
         <div className="contact__intro">
           <SectionLabel>Bize Ulaşın</SectionLabel>
-          <h2>İletişimde Kalalım</h2>
+          <Heading>İletişimde Kalalım</Heading>
           {socialHandles.length > 0 && (
             <div className="contact__social-handles" aria-label="Sosyal medya hesapları">
               {socialHandles.map((social) => {

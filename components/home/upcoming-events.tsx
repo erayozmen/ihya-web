@@ -9,9 +9,9 @@ import { EventCard } from "./event-card";
 
 const instagram = socialLinks.find((social) => social.platform === "Instagram");
 
-// Always rendered — the hero's "Etkinlikleri Keşfet" CTA anchors here, so the
-// section stays in place (with a fallback) even when there is nothing to list.
-export async function UpcomingEvents() {
+// Always rendered, with a fallback when there is nothing to list — the hero's
+// "Etkinlikleri Keşfet" CTA leads to /etkinlikler, which must never come up empty.
+export async function UpcomingEvents({ headingLevel: Heading = "h2" }: { headingLevel?: "h1" | "h2" } = {}) {
   const result = await getUpcomingEvents();
   const hasEvents = result.status === "success" && result.data.length > 0;
 
@@ -20,11 +20,11 @@ export async function UpcomingEvents() {
       <Container className="events__layout">
         <div className="events__intro">
           <SectionLabel>Yaklaşan Etkinlikler</SectionLabel>
-          <h2>
+          <Heading>
             Sohbet ve
             <br />
             <em>Etkinliklerimiz</em>
-          </h2>
+          </Heading>
         </div>
 
         <div className="events__grid">

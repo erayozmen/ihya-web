@@ -805,21 +805,24 @@ a {
 .participation > .container,
 .footer > .container { position: relative; z-index: 1; }
 
+/* h1 covers the standalone section pages (/hakkimizda, …), where the section
+   title is the page heading; class-scoped h1 rules (hero, donate, 404) win. */
+h1,
 h2 {
   font-family: var(--font-heading), serif;
   font-weight: 600;
 }
 
 /* generic heading rhythm shared by every section below the hero */
-.events__intro h2,
-.medreses__heading h2,
-.about-preview__layout h2,
-.education__intro h2,
-.field-activities__heading h2,
+.events__intro :is(h1, h2),
+.medreses__heading :is(h1, h2),
+.about-preview__layout :is(h1, h2),
+.education__intro :is(h1, h2),
+.field-activities__heading :is(h1, h2),
 .mobile-app__head h2,
 .contents__heading h2,
-.participation__heading h2,
-.contact h2 {
+.participation__heading :is(h1, h2),
+.contact :is(h1, h2) {
   margin: 0;
   color: var(--ink);
   font-size: clamp(2.75rem, 4.4vw, 4.25rem);
@@ -829,9 +832,9 @@ h2 {
 }
 
 .mobile-app__head h2,
-.participation__heading h2 { color: var(--parchment); }
+.participation__heading :is(h1, h2) { color: var(--parchment); }
 
-h2 em { font-weight: 500; font-style: italic; }
+:is(h1, h2) em { font-weight: 500; font-style: italic; }
 
 /* ---------------------------------------------------------------------- */
 /* Impact — a single hairline row of numerals, not a shadowed tile grid.   */
@@ -1300,7 +1303,7 @@ h2 em { font-weight: 500; font-style: italic; }
 /* ---------------------------------------------------------------------- */
 
 .about-preview__layout { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr); gap: clamp(3rem, 6vw, 6rem); }
-.about-preview__layout h2 { font-size: clamp(3.5rem, 5.6vw, 5.5rem); }
+.about-preview__layout :is(h1, h2) { font-size: clamp(3.5rem, 5.6vw, 5.5rem); }
 
 .about-preview__copy p { margin: 0; color: var(--muted); font-size: 1rem; line-height: 1.85; }
 .about-preview__copy p + p { margin-top: 1.3rem; padding-top: 1.3rem; border-top: 1px solid var(--line); }
@@ -1850,15 +1853,15 @@ button.participation__option {
   .participation,
   .contact { padding-block: 5rem; }
 
-  .events__intro h2,
-  .medreses__heading h2,
-  .about-preview__layout h2,
-  .education__intro h2,
-  .field-activities__heading h2,
+  .events__intro :is(h1, h2),
+  .medreses__heading :is(h1, h2),
+  .about-preview__layout :is(h1, h2),
+  .education__intro :is(h1, h2),
+  .field-activities__heading :is(h1, h2),
   .mobile-app__head h2,
   .contents__heading h2,
-  .participation__heading h2,
-  .contact h2 { font-size: clamp(2.6rem, 12vw, 3.2rem); }
+  .participation__heading :is(h1, h2),
+  .contact :is(h1, h2) { font-size: clamp(2.6rem, 12vw, 3.2rem); }
 
   .impact__surface { grid-template-columns: 1fr 1fr; }
   .event-card { grid-template-columns: 64px 1fr; gap: 1rem; }

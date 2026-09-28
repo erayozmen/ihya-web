@@ -12,7 +12,7 @@ const activityIcons: Record<string, LucideIcon> = {
   "kahvehane-sohbetleri": Coffee,
 };
 
-export function FieldActivitiesSection() {
+export function FieldActivitiesSection({ headingLevel: Heading = "h2" }: { headingLevel?: "h1" | "h2" } = {}) {
   return (
     <section className="field-activities section--textured" id="faaliyetler">
       <span className="section-divider" aria-hidden="true" />
@@ -20,7 +20,7 @@ export function FieldActivitiesSection() {
         <div className="field-activities__heading">
           <div>
             <SectionLabel>Diğer Faaliyetlerimiz</SectionLabel>
-            <h2>Hayatın İçinde İhya</h2>
+            <Heading>Hayatın İçinde İhya</Heading>
           </div>
           <p>
             İhya, yalnızca bir merkezde değil; evde, sokakta, esnafın yanında, hastanın

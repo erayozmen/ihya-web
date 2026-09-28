@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useInquiryModal } from "@/components/ui/inquiry-modal";
+import { ROUTES } from "@/lib/routes";
 
 // Mirrors .hero__seal width: clamp(208px, 17vw, 293px), and 120px max on phones.
 const SEAL_SIZES = "(max-width: 640px) 120px, (max-width: 1224px) 208px, (max-width: 1724px) 17vw, 293px";
@@ -39,9 +41,9 @@ export function Hero() {
             </p>
 
             <div className="hero__actions">
-              <a href="#etkinlikler" className="hero__button hero__button--primary">
+              <Link href={ROUTES.events} className="hero__button hero__button--primary">
                 Etkinlikleri Keşfet
-              </a>
+              </Link>
               <button type="button" className="hero__button hero__button--secondary" onClick={() => open("katil")}>
                 Bize Katıl ↗
               </button>

@@ -14,7 +14,7 @@ function getCenterImages(center: CenterItem): ImageAsset[] {
 }
 
 // The empty/error state lives in MedresesSection; this only renders real centers.
-export function MedreseSelector({ centers }: { centers: CenterItem[] }) {
+export function MedreseSelector({ centers, headingLevel: Heading = "h2" }: { centers: CenterItem[]; headingLevel?: "h1" | "h2" }) {
   const [selectedId, setSelectedId] = useState(centers[0]?.id);
   const selected = centers.find((center) => center.id === selectedId) ?? centers[0];
   const [activeImagePath, setActiveImagePath] = useState(selected?.image);
@@ -28,7 +28,7 @@ export function MedreseSelector({ centers }: { centers: CenterItem[] }) {
   return (
     <section className="medreses section--textured" id="medreseler">
       <Container>
-        <div className="medreses__heading"><SectionLabel>Merkezlerimiz</SectionLabel><h2>İlim ve Hizmet<br />Noktalarımız</h2></div>
+        <div className="medreses__heading"><SectionLabel>Merkezlerimiz</SectionLabel><Heading>İlim ve Hizmet<br />Noktalarımız</Heading></div>
         <div className="medreses__composition">
           <div className="medreses__intro"><p>Süleymanpaşa’nın farklı noktalarında eğitim, sohbet ve hizmet faaliyetlerimizi sürdürüyoruz.</p><span className="medreses__scope">Süleymanpaşa · Tekirdağ</span></div>
           <div className="medreses__stage" aria-live="polite">
